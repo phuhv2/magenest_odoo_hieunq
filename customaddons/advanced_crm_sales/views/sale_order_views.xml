@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--inherit form view of sale-->
+    <record id="s_sale_order_inherit_form_view" model="ir.ui.view">
+        <field name="name">sale.order.inherit.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="plan_sale_order"/>
+            </field>
+            <button name="action_confirm" position="after">
+                <button name="%(advanced_crm_sales.plan_sale_order_action)d" string="Create Plan Sale Order"
+                        type="action" context='{"default_quotations": active_id}'/>
+            </button>
+        </field>
+    </record>
+</odoo>
