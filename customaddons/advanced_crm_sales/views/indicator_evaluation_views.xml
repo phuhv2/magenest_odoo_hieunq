@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--tree view-->
+    <record id="indicator_evaluation_tree_view" model="ir.ui.view">
+        <field name="name">indicator.evaluation.view.tree</field>
+        <field name="model">indicator.evaluation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sales_team_ids"/>
+                <field name="real_revenue" widget="monetary"/>
+                <field name="monthly_sales" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--form view-->
+    <record id="indicator_evaluation_form_view" model="ir.ui.view">
+        <field name="name">indicator.evaluation.view.form</field>
+        <field name="model">indicator.evaluation</field>
+        <field name="arch" type="xml">
+            <form name="Indicator Evaluation Form">
+                <sheet>
+                    <div class="oe_title">
+                        <lable for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="opportunity_ids"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="sales_team_ids"/>
+                        <field name="month"/>
+                        <field name="monthly_sales"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!--    actions-->
+    <record id="indicator_evaluation_action" model="ir.actions.act_window">
+        <field name="name">Indicator Evaluation</field>
+        <field name="res_model">indicator.evaluation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    menu-->
+    <menuitem name="Indicator Evaluation" id="indicator_evaluation_menu" parent="crm.crm_menu_root"
+              action="indicator_evaluation_action"/>
+</odoo>
