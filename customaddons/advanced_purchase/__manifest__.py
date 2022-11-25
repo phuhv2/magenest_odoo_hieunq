@@ -28,6 +28,7 @@
         'views/s_hr_department.xml',
         'demo/s_hr_department_demo_data.xml',
         'views/s_purchase_order.xml',
+        'views/employee_order_limit.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
