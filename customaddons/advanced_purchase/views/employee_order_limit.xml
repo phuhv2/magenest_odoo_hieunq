@@ -7,7 +7,7 @@
             <field name="model">employee.order.limit</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name"/>
+                    <field name="name" string="Name"/>
                     <field name="order_limit"/>
                 </tree>
             </field>
@@ -18,10 +18,12 @@
             <field name="name">employee.order.limit.view.form</field>
             <field name="model">employee.order.limit</field>
             <field name="arch" type="xml">
-                <form name="Employee Order Limit">
+                <form>
                     <sheet>
-                        <field name="name" string="Employee Name"/>
-                        <field name="order_limit" string="Order Limit"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="order_limit"/>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -35,7 +37,10 @@
         </record>
 
 <!--menu-->
-        <menuitem id="employee_order_limit_menu" parent="purchase.menu_purchase_root"
+        <menuitem id="order_limit_menu_root" parent="purchase.menu_purchase_root"
+                  name="Order Limit"/>
+
+        <menuitem id="employee_order_limit_menu" parent="order_limit_menu_root"
                   name="Employee Order Limit" action="employee_order_limit_action"/>
     </data>
 </odoo>

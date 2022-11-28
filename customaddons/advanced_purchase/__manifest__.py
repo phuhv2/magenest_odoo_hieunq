@@ -24,11 +24,14 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/group.xml',
+        'security/ir.model.access.csv',
         'views/s_hr_department.xml',
         'demo/s_hr_department_demo_data.xml',
         'views/s_purchase_order.xml',
         'views/employee_order_limit.xml',
+        'views/order_limit.xml',
+        'wizard/s_choice_department.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
