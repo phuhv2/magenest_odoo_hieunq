@@ -11,7 +11,7 @@
                             <field name="month"/>
                         </group>
                         <group>
-                            <field name="department_id"/>
+                            <field name="department_id" widget="many2many_checkboxes"/>
                         </group>
                     </group>
                     <footer>
@@ -31,6 +31,8 @@
             <field name="view_id" ref="s_choice_department_form_view"/>
         </record>
 
-        <menuitem id="s_choice_department_menu" parent="hr.menu_hr_root" action="s_choice_department_action" sequence="20" />
+<!--        Report for froup accountant-->
+        <menuitem id="s_choice_department_menu" parent="hr.menu_hr_root" action="s_choice_department_action"
+                  sequence="20" groups="advanced_purchase.group_staff_accountant"/>
     </data>
 </odoo>

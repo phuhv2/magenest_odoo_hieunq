@@ -9,6 +9,6 @@ class EmployeeOrderLimit(models.Model):
 
     @api.constrains('order_limit')
     def _check_order_limit(self):
-        for rec in self:
-            if rec.order_limit<0:
-                raise ValidationError("The expected price must be strictly positive")
+        if self.order_limit:
+            if self.order_limit<0:
+                raise ValidationError('The expected price must be strictly positive')

@@ -12,4 +12,4 @@ class SChoiceDepartment(models.TransientModel):
     department_id = fields.Many2many('hr.department', string='Department')
 
     def btn_confirm(self):
-        print('hello world')
+        pass
