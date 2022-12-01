@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 
 class SChoiceDepartment(models.TransientModel):
     _name = 's.choice.department'
@@ -11,5 +11,27 @@ class SChoiceDepartment(models.TransientModel):
     ], string='Month', default='1', required=True)
     department_id = fields.Many2many('hr.department', string='Department')
 
+    # Filter data by month and department name
     def btn_confirm(self):
-        pass
+        for rec in self:
+            if rec.month and rec.department_id:
+                return {
+                    'name': _("Detail Report"),
+                    'view_mode': 'tree',
+                    'res_model': 'hr.department',
+                    'type': 'ir.actions.act_window',
+                    'view_id': self.env.ref('hr.view_department_tree').id,
+                    'target': 'current',
+                    'domain': [('create_month', '=', rec.month), ('name', '=', rec.department_id.name)],
+                    'context': {'create': False, 'edit': False, 'delete': False}
+                }
+            else:
+                return {
+                    'name': _("Detail Report"),
+                    'view_mode': 'tree',
+                    'res_model': 'hr.department',
+                    'type': 'ir.actions.act_window',
+                    'view_id': self.env.ref('hr.view_department_tree').id,
+                    'target': 'current',
+                    'context': {'create': False, 'edit': False, 'delete': False}
+                }

@@ -22,6 +22,16 @@
                     <field name="spending_limit" widget="monetary"/>
                     <field name="real_revenue" widget="monetary"/>
                 </xpath>
+                
+                <xpath expr="//field[@name='manager_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='total_employee']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
     </data>
