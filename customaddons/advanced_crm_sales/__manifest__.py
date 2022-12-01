@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "advanced_crm_sales",
+    'name': "Advanced CRM-Sales",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,13 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'sale', 'crm'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'security/group.xml',
+        'security/ir.model.access.csv',
+        'views/s_crm_lead.xml',
+        'views/s_crm_team.xml',
+        'views/plan_sale_order.xml',
+        'views/s_sale_order.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
