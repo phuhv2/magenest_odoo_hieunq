@@ -18,16 +18,17 @@ class SHrDepartment(models.Model):
     @api.depends('name')
     def _compute_real_revenue(self):
         for rec in self:
-            self.env.cr.execute("""
-                SELECT SUM(purchase_order.amount_total) AS real_revenue
-                FROM hr_department 
-                INNER JOIN purchase_order
-                ON hr_department.id=purchase_order.hr_department_id
-                WHERE hr_department.name LIKE '%s'
-                GROUP BY hr_department.name
-            """% (rec.name))
-            results = self.env.cr.dictfetchall()
-            rec.real_revenue = results[0]['real_revenue']
+            if rec.name:
+                self.env.cr.execute("""
+                    SELECT SUM(purchase_order.amount_total) AS real_revenue
+                    FROM hr_department 
+                    INNER JOIN purchase_order
+                    ON hr_department.id=purchase_order.hr_department_id
+                    WHERE hr_department.name LIKE '%s'
+                    GROUP BY hr_department.name
+                """% (rec.name))
+                results = self.env.cr.dictfetchall()
+                rec.real_revenue = results[0]['real_revenue']
 
     # Get create_month of create_date
     @api.depends('create_date')

@@ -22,7 +22,7 @@ class SChoiceDepartment(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'view_id': self.env.ref('hr.view_department_tree').id,
                     'target': 'current',
-                    'domain': [('create_month', '=', rec.month), ('name', '=', rec.department_id.name)],
+                    'domain': [('create_month', '=', rec.month), ('name', '=', rec.department_id.mapped('name'))],
                     'context': {'create': False, 'edit': False, 'delete': False}
                 }
             else:
