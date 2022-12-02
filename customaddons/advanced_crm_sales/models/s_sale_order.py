@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class SSaleOrder(models.Model):
     _inherit = 'sale.order'
 

@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from datetime import date
 
+
 class SReportCrmLead(models.TransientModel):
     _name = 's.report.crm.lead'
 

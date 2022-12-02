@@ -1,5 +1,6 @@
 from odoo import models, fields
 
+
 class AprroverList(models.Model):
     _name = 'approver.list'
 
@@ -16,6 +17,7 @@ class AprroverList(models.Model):
         states = self.plan_sale_order_id.approver_id.mapped('approval_status')
         if [state == 'approve' for state in states]:
             self.plan_sale_order_id.check_confirm = 'yes'
+
     def btn_refuse(self):
         self.approval_status = 'refuse'
         states = self.plan_sale_order_id.approver_id.mapped('approval_status')

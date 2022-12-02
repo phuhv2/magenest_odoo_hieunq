@@ -15,7 +15,7 @@
         <record id="group_staff_approver" model="res.groups">
             <field name="name">Approver</field>
             <field name="category_id" ref="advanced_crm_sales_staff"/>
-            <field name="implied_ids" eval="[(4, ref('group_staff_employee'))]" />
+            <field name="implied_ids" eval="[(4, ref('group_staff_employee'))]"/>
         </record>
 
         <record model="res.groups" id="group_staff_manager">

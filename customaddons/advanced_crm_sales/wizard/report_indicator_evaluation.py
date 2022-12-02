@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from datetime import date
 
+
 class ReportIndicatorEvaluation(models.TransientModel):
     _name = 'report.indicator.evaluation'
 

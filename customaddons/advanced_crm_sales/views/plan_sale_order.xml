@@ -8,15 +8,17 @@
                 <form name="Plan Sale Order">
                     <header>
                         <button name="btn_new" type="object" string="New" class="oe_highlight"
-                                attrs="{'invisible': [('state', 'in', ('send', 'approve','refuse'))]}"
+                                attrs="{'invisible': [('state', 'in', ('new', 'send', 'approve','refuse'))]}"
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_send" type="object" string="Send" class="oe_highlight"
                                 attrs="{'invisible': [('state', 'in', ('send', 'approve','refuse'))]}"
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_approve_confirm" type="object" string="Approve" class="oe_highlight"
-                                groups="advanced_crm_sales.group_staff_approver"/>
+                                groups="advanced_crm_sales.group_staff_approver"
+                                attrs="{'invisible': [('state', 'in', ('approve','refuse'))]}"/>
                         <button name="btn_refuse_confirm" type="object" string="Refuse" class="oe_highlight"
-                                groups="advanced_crm_sales.group_staff_approver"/>
+                                groups="advanced_crm_sales.group_staff_approver"
+                                attrs="{'invisible': [('state', 'in', ('approve','refuse'))]}"/>
 
                         <field name="state" widget="statusbar"/>
                     </header>
@@ -26,11 +28,12 @@
                             <label for="name" class="oe_edit-only"/>
                             <h1>
                                 <field name="name" placeholder="Plan Sale Order Name"
-                                    attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
+                                       attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
                             </h1>
                         </div>
                         <group>
-                            <field name="quotation" attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
+                            <field name="quotation"
+                                   attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
                             <field name="content" attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
                         </group>
                         <notebook>
@@ -41,10 +44,10 @@
                                         <field name="approval_status" string="Status"/>
                                         <button name="btn_approve" string="Approve" type="object" class="oe_highlight"
                                                 groups="advanced_crm_sales.group_staff_approver"
-                                                attrs="{'invisible': [('approval_status', 'in', ('approve'))]}"/>
+                                                attrs="{'invisible': [('approval_status', 'in', ('refuse', 'approve'))]}"/>
                                         <button name="btn_refuse" string="Refuse" type="object" class="oe_highlight"
                                                 groups="advanced_crm_sales.group_staff_approver"
-                                                attrs="{'invisible': [('approval_status', 'in', ('refuse'))]}"/>
+                                                attrs="{'invisible': [('approval_status', 'in', ('refuse', 'approve'))]}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -60,16 +63,16 @@
         </record>
 
         <record id="plan_sale_order_view_tree" model="ir.ui.view">
-        <field name="name">plan.sale.order.view.tree</field>
-        <field name="model">plan.sale.order</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name"/>
-                <field name="quotation"/>
-                <field name="content"/>
-            </tree>
-        </field>
-    </record>
+            <field name="name">plan.sale.order.view.tree</field>
+            <field name="model">plan.sale.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="quotation"/>
+                    <field name="content"/>
+                </tree>
+            </field>
+        </record>
 
         <record model="ir.actions.act_window" id="plan_sale_order_action">
             <field name="name">Plan Sale Order</field>

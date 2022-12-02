@@ -14,7 +14,7 @@
                     <field name="real_revenue" widget="monetary" invisible="1"/>
                 </xpath>
 
-            <!--Only assign opportunities to yourself or sales staff. Manager can sign for everyone-->
+                <!--Only assign opportunities to yourself or sales staff. Manager can sign for everyone-->
                 <xpath expr="//field[@name='user_id']" position="attributes">
                     <attribute name="groups">advanced_crm_sales.group_staff_employee</attribute>
                 </xpath>
@@ -27,27 +27,27 @@
             <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='contact_name']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='email_from']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='phone']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='activity_ids']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='my_activity_date_deadline']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='stage_id']" position="attributes">
-                   <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='expected_revenue']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="sales_team_id"/>
                     <field name="minimum_revenue" widget="monetary"/>

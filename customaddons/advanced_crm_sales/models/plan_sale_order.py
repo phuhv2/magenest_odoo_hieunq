@@ -1,6 +1,7 @@
 from odoo import models, fields
 from odoo.exceptions import UserError
 
+
 class PlanSaleOrder(models.Model):
     _name = 'plan.sale.order'
     _inherit = ['mail.thread']
@@ -23,7 +24,6 @@ class PlanSaleOrder(models.Model):
     def btn_new(self):
         self.state = 'new'
         self.approver_id.approval_status = 'not approved yet'
-
 
     def btn_send(self):
         if self.state == 'new':
