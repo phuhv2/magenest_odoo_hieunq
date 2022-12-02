@@ -10,6 +10,7 @@ class SCrmLead(models.Model):
         ('yes', 'Yes'),
         ('no', 'No')
     ], string='Check Edit', default='yes')
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
 
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
@@ -23,3 +24,13 @@ class SCrmLead(models.Model):
             count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', self.id)])
             if count_sale_order > 0:
                 self.check_edit = 'no'
+
+    @api.depends('name')
+    def _compute_real_revenue(self):
+        for rec in self:
+            if rec.name:
+                amount_total = self.env['sale.order'].search([('opportunity_id', '=', rec.name)])
+                amount_total_opportunity = amount_total.mapped('amount_total')
+                rec.real_revenue = sum(amount_total_opportunity)
+            else:
+                rec.real_revenue = 0

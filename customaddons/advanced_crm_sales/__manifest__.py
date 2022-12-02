@@ -30,6 +30,7 @@
         'views/s_crm_team.xml',
         'views/plan_sale_order.xml',
         'views/s_sale_order.xml',
+        'wizard/s_report_crm_lead.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
