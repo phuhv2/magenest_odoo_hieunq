@@ -11,6 +11,7 @@ class SCrmLead(models.Model):
         ('no', 'No')
     ], string='Check Edit', default='yes')
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
+    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=False)
 
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
@@ -25,6 +26,7 @@ class SCrmLead(models.Model):
             if count_sale_order > 0:
                 self.check_edit = 'no'
 
+    # Get data into view tree of real_revenue
     @api.depends('name')
     def _compute_real_revenue(self):
         for rec in self:
@@ -34,3 +36,12 @@ class SCrmLead(models.Model):
                 rec.real_revenue = sum(amount_total_opportunity)
             else:
                 rec.real_revenue = 0
+
+    # Get create_month of create_date
+    @api.depends('create_date')
+    def _compute_create_month(self):
+        for rec in self:
+            if rec.create_date:
+                create_date = str(rec.create_date)
+                create_month = create_date.split("-")
+                rec.create_month = create_month[1]

@@ -11,14 +11,27 @@ class SReportCrmLead(models.TransientModel):
     sale_team_id = fields.Many2many('crm.team', string='Sale Team')
 
     def btn_confirm(self):
-        pass
-        # for rec in self:
-        #     return {
-        #         'name': _("Detail Report"),
-        #         'view_mode': 'tree',
-        #         'res_model': 'crm.lead',
-        #         'type': 'ir.actions.act_window',
-        #         'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
-        #         'target': 'current',
-        #         'context': {'create': False, 'edit': False, 'delete': False}
-        #     }
+        for rec in self:
+            if rec.month and rec.sale_team_id:
+                sale_team = rec.sale_team_id.mapped('id')
+                for id in sale_team:
+                    return {
+                        'name': _("Detail Report"),
+                        'view_mode': 'tree',
+                        'res_model': 'crm.lead',
+                        'type': 'ir.actions.act_window',
+                        'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                        'target': 'current',
+                        'domain': [('create_month', '=', rec.month), ('sales_team_id', '=', id)],
+                        'context': {'create': False, 'edit': False, 'delete': False}
+                    }
+            else:
+                return {
+                    'name': _("Detail Report"),
+                    'view_mode': 'tree',
+                    'res_model': 'crm.lead',
+                    'type': 'ir.actions.act_window',
+                    'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                    'target': 'current',
+                    'context': {'create': False, 'edit': False, 'delete': False}
+                }

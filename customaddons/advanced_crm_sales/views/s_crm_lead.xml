@@ -11,7 +11,7 @@
                     <field name="check_edit" invisible="1"/>
                     <field name="minimum_revenue" widget="monetary"
                            attrs="{'readonly':[('check_edit','=','no')]}"/>
-                    <field name="real_revenue" widget="monetary" invisible="0"/>
+                    <field name="real_revenue" widget="monetary" invisible="1"/>
                 </xpath>
 
             <!--Only assign opportunities to yourself or sales staff. Manager can sign for everyone-->
