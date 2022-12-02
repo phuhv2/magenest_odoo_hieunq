@@ -1,8 +1,8 @@
 from odoo import fields, models, api, _
 from datetime import date
 
-class SReportCrmLead(models.TransientModel):
-    _name = 's.report.crm.lead'
+class ReportIndicatorEvaluation(models.TransientModel):
+    _name = 'report.indicator.evaluation'
 
     month = fields.Selection([
         ('0', date.today().strftime('%B')),
@@ -20,20 +20,20 @@ class SReportCrmLead(models.TransientModel):
                     return {
                         'name': _("Detail Report"),
                         'view_mode': 'tree',
-                        'res_model': 'crm.lead',
+                        'res_model': 'indicator.evaluation',
                         'type': 'ir.actions.act_window',
-                        'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                        'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
                         'target': 'current',
-                        'domain': [('create_month', '=', rec.month), ('sales_team_id', '=', id)],
+                        'domain': [('create_month', '=', rec.month), ('sale_team', '=', id)],
                         'context': {'create': False, 'edit': False, 'delete': False}
                     }
             else:
                 return {
                     'name': _("Detail Report"),
                     'view_mode': 'tree',
-                    'res_model': 'crm.lead',
+                    'res_model': 'indicator.evaluation',
                     'type': 'ir.actions.act_window',
-                    'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                    'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
                     'target': 'current',
                     'context': {'create': False, 'edit': False, 'delete': False}
                 }

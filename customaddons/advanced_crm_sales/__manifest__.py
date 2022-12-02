@@ -31,6 +31,8 @@
         'views/plan_sale_order.xml',
         'views/s_sale_order.xml',
         'wizard/s_report_crm_lead.xml',
+        'views/indicator_evaluation.xml',
+        'wizard/report_indicator_evaluation.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
