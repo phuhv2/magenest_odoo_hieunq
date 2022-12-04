@@ -15,7 +15,8 @@
                         </group>
                     </group>
                     <footer>
-                        <button string="Confirm" name="btn_confirm" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Confirm" name="btn_confirm" type="object" default_focus="1"
+                                class="btn-primary"/>
                         <button string="Cancel" class="btn-default" special="cancel"/>
                     </footer>
                 </form>
@@ -31,7 +32,7 @@
             <field name="view_id" ref="s_choice_department_form_view"/>
         </record>
 
-<!--        Report for froup accountant-->
+        <!--        Report for froup accountant-->
         <menuitem id="s_choice_department_menu" parent="hr.menu_hr_root" action="s_choice_department_action"
                   sequence="20" groups="advanced_purchase.group_staff_accountant"/>
     </data>

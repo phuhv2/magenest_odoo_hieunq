@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-<!--        tree view-->
+        <!--        tree view-->
         <record model="ir.ui.view" id="order_limit_view_tree">
             <field name="name">order.limit.view.tree</field>
             <field name="model">order.limit</field>
@@ -12,7 +12,7 @@
             </field>
         </record>
 
-<!--        form view-->
+        <!--        form view-->
         <record model="ir.ui.view" id="order_limit_view_form">
             <field name="name">order.limit.view.form</field>
             <field name="model">order.limit</field>
@@ -32,14 +32,14 @@
             </field>
         </record>
 
-<!--        actions-->
+        <!--        actions-->
         <record model="ir.actions.act_window" id="order_limit_action">
             <field name="name">Order Limit</field>
             <field name="res_model">order.limit</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-<!--        menu-->
+        <!--        menu-->
         <menuitem id="order_limit_menu" parent="order_limit_menu_root"
                   name="Order Limit" action="order_limit_action"/>
     </data>

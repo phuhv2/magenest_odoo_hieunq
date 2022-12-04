@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 
+
 class SChoiceDepartment(models.TransientModel):
     _name = 's.choice.department'
     _description = 'Choice Department Wizard'

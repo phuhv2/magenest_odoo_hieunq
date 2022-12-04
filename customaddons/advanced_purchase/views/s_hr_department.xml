@@ -12,7 +12,7 @@
                 </xpath>
             </field>
         </record>
-        
+
         <record id="s_hr_department_tree_inherit" model="ir.ui.view">
             <field name="name">hr.department.tree.inherit</field>
             <field name="model">hr.department</field>
@@ -22,7 +22,7 @@
                     <field name="spending_limit" widget="monetary"/>
                     <field name="real_revenue" widget="monetary"/>
                 </xpath>
-                
+
                 <xpath expr="//field[@name='manager_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
