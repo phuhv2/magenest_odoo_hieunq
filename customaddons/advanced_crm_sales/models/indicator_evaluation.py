@@ -12,7 +12,7 @@ class IndicatorEvaluation(models.Model):
         ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'August'),
         ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')
     ], string='Month', default='1')
-    monthly_sales = fields.Float('Revenue Targets', compute='_compute_monthly_sales')
+    monthly_sales = fields.Float('Revenue Targets')
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=False)
 
     @api.depends('sale_order_id')
@@ -26,35 +26,34 @@ class IndicatorEvaluation(models.Model):
                     rec.real_revenue = sum(amount_untaxed_opportunity)
 
     @api.onchange('sale_team', 'month')
-    def _compute_monthly_sales(self):
+    def _onchange_monthly_sales(self):
         results = self.env['crm.team'].search([('id', '=', self.sale_team.id)])
-        for rec in self:
-            if rec.month == '1':
-                rec.monthly_sales = results.january_sales
-            elif rec.month == '2':
-                rec.monthly_sales = results.february_sales
-            elif rec.month == '3':
-                rec.monthly_sales = results.march_sales
-            elif rec.month == '4':
-                rec.monthly_sales = results.april_sales
-            elif rec.month == '5':
-                rec.monthly_sales = results.may_sales
-            elif rec.month == '6':
-                rec.monthly_sales = results.june_sales
-            elif rec.month == '7':
-                rec.monthly_sales = results.july_sales
-            elif rec.month == '8':
-                rec.monthly_sales = results.august_sales
-            elif rec.month == '9':
-                rec.monthly_sales = results.september_sales
-            elif rec.month == '10':
-                rec.monthly_sales = results.october_sales
-            elif rec.month == '11':
-                rec.monthly_sales = results.november_sales
+        if self.month:
+            if self.month == '1':
+                self.monthly_sales = results.january_sales
+            elif self.month == '2':
+                self.monthly_sales = results.february_sales
+            elif self.month == '3':
+                self.monthly_sales = results.march_sales
+            elif self.month == '4':
+                self.monthly_sales = results.april_sales
+            elif self.month == '5':
+                self.monthly_sales = results.may_sales
+            elif self.month == '6':
+                self.monthly_sales = results.june_sales
+            elif self.month == '7':
+                self.monthly_sales = results.july_sales
+            elif self.month == '8':
+                self.monthly_sales = results.august_sales
+            elif self.month == '9':
+                self.monthly_sales = results.september_sales
+            elif self.month == '10':
+                self.monthly_sales = results.october_sales
+            elif self.month == '11':
+                self.monthly_sales = results.november_sales
             else:
-                rec.monthly_sales = results.december_sales
+                self.monthly_sales = results.december_sales
 
-    # Get create_month of create_date
     @api.depends('create_date')
     def _compute_create_month(self):
         for rec in self:
