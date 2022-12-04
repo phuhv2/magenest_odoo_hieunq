@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import UserError
 
 
@@ -20,6 +20,10 @@ class PlanSaleOrder(models.Model):
         ('yes', 'Yes'),
         ('no', 'No'),
     ], string='Check Confirm')
+    check_send = fields.Selection([
+        ('yes', 'Yes'),
+        ('no', 'No')
+    ], string='Check Send', compute='_compute_check_send')
 
     def btn_new(self):
         self.state = 'new'
@@ -53,3 +57,12 @@ class PlanSaleOrder(models.Model):
             self.message_post(body=f'{self.create_uid.name}-> The new plan has been refused.')
         else:
             raise UserError('All approvers who have not yet declined approval.')
+
+    @api.depends('create_uid')
+    def _compute_check_send(self):
+        current_user_ui = self.env.uid
+        for rec in self:
+            rec.check_send = 'no'
+            if rec.create_uid:
+                if rec.create_uid == current_user_ui:
+                    rec.check_send = 'yes'

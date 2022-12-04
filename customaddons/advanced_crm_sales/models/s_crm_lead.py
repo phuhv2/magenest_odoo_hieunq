@@ -56,5 +56,5 @@ class SCrmLead(models.Model):
                 rec.check_priority = 'no'
 
     # Override
-    def btn_check_priority(self):
+    def btn_leader_set_lost(self):
         return super(SCrmLead, self).action_set_lost()
