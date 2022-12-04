@@ -13,8 +13,9 @@ class IndicatorEvaluation(models.Model):
         ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')
     ], string='Month', default='1')
     monthly_sales = fields.Float('Revenue Targets')
-    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=False)
+    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
 
+    # Calculate real_revenue = amount_untaxed corresponding to the opportunity
     @api.depends('sale_order_id')
     def _compute_real_revenue(self):
         for rec in self:

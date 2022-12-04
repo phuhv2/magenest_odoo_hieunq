@@ -6,7 +6,7 @@ class SSaleOrder(models.Model):
 
     plan_sale_order_id = fields.Many2one('plan.sale.order', string='Plan Sale Order')
 
-    # Override
+    # Override check added plan and plan approved
     def action_confirm(self):
         if self.plan_sale_order_id and self.plan_sale_order_id.check_confirm == 'yes':
             return super(SSaleOrder, self).action_confirm()

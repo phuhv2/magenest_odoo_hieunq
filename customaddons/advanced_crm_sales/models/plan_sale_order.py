@@ -50,7 +50,6 @@ class PlanSaleOrder(models.Model):
         else:
             raise UserError('All approvers have not yet agreed to approve.')
 
-    # refuse confirm
     def btn_refuse_confirm(self):
         if self.check_confirm == 'no':
             self.state = 'refuse'
@@ -58,6 +57,7 @@ class PlanSaleOrder(models.Model):
         else:
             raise UserError('All approvers who have not yet declined approval.')
 
+    # Only the creator can use the send button
     @api.depends('create_uid')
     def _compute_check_send(self):
         current_user_ui = self.env.uid

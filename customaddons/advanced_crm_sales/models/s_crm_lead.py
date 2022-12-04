@@ -12,7 +12,7 @@ class SCrmLead(models.Model):
         ('no', 'No')
     ], string='Check Edit', default='yes', compute='_compute_check_edit')
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
-    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=False)
+    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
     check_priority = fields.Selection([
         ('yes', 'Yes'),
         ('no', 'No')
@@ -24,13 +24,14 @@ class SCrmLead(models.Model):
             if self.minimum_revenue < 0:
                 raise ValidationError("The expected price must be strictly positive")
 
+    # Check if count of sales order > 0, then minimum_revenue is readonly
     def _compute_check_edit(self):
         count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', self.id)])
         self.check_edit = 'yes'
         if count_sale_order > 0:
             self.check_edit = 'no'
 
-    # Calculate real revenue = amount total corresponding to the opportunity
+    # Calculate real_revenue = amount_total corresponding to the opportunity
     @api.depends('name')
     def _compute_real_revenue(self):
         for rec in self:
@@ -48,6 +49,7 @@ class SCrmLead(models.Model):
                 create_month = create_date.split("-")
                 rec.create_month = create_month[1]
 
+    # Check priority = 3 then hide the Lost button
     @api.depends('priority')
     def _compute_check_priority(self):
         for rec in self:
@@ -55,6 +57,6 @@ class SCrmLead(models.Model):
             if rec.priority == '3':
                 rec.check_priority = 'no'
 
-    # Override
+    # Override the Lost button again for the groups leader
     def btn_leader_set_lost(self):
         return super(SCrmLead, self).action_set_lost()
