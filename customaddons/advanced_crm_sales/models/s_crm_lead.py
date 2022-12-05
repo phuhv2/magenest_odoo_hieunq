@@ -11,7 +11,7 @@ class SCrmLead(models.Model):
         ('yes', 'Yes'),
         ('no', 'No')
     ], string='Check Edit', default='yes', compute='_compute_check_edit')
-    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
     check_priority = fields.Selection([
         ('yes', 'Yes'),
@@ -34,7 +34,6 @@ class SCrmLead(models.Model):
     # Calculate real_revenue = amount_total corresponding to the opportunity
     def _compute_real_revenue(self):
         for rec in self:
-            rec.real_revenue = 0
             if rec.name:
                 amount_total = self.env['sale.order'].search([('opportunity_id', '=', rec.name)])
                 amount_total_opportunity = amount_total.mapped('amount_total')
