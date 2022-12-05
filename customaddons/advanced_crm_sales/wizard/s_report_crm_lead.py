@@ -15,29 +15,29 @@ class SReportCrmLead(models.TransientModel):
 
     # Filter data by sale_team, by selected month or by current month
     def btn_confirm(self):
-        for rec in self:
-            if rec.month and rec.sale_team_id:
-                if rec.month == '0':
-                    rec.month = str(date.today().month)
-                sale_team = rec.sale_team_id.mapped('id')
-                for id in sale_team:
-                    return {
-                        'name': _("Detail Report"),
-                        'view_mode': 'tree',
-                        'res_model': 'crm.lead',
-                        'type': 'ir.actions.act_window',
-                        'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
-                        'target': 'current',
-                        'domain': [('sales_team_id', '=', id), ('create_month', '=', rec.month),],
-                        'context': {'create': False, 'edit': False, 'delete': False}
-                    }
-            else:
-                return {
-                    'name': _("Detail Report"),
-                    'view_mode': 'tree',
-                    'res_model': 'crm.lead',
-                    'type': 'ir.actions.act_window',
-                    'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
-                    'target': 'current',
-                    'context': {'create': False, 'edit': False, 'delete': False}
-                }
+        if self.month and self.sale_team_id:
+            if self.month == '0':
+                self.month = str(date.today().month)
+            sale_teams_id = self.sale_team_id.mapped('id')
+            context = {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'crm.lead',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                'target': 'current',
+                'domain': [('sales_team_id', 'in', sale_teams_id), ('create_month', '=', self.month), ],
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+
+        else:
+            context = {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'crm.lead',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
+                'target': 'current',
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+        return context
