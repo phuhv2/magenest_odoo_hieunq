@@ -18,7 +18,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
         for rec in self:
             if rec.month and rec.sale_team_id:
                 if rec.month == '0':
-                    current_month = date.today().month
+                    rec.month = str(date.today().month)
                 sale_team = rec.sale_team_id.mapped('id')
                 for id in sale_team:
                     return {
@@ -28,9 +28,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
                         'type': 'ir.actions.act_window',
                         'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
                         'target': 'current',
-                        'domain': [('sale_team', '=', id),
-                                   '|', ('create_month', '=', rec.month),
-                                   ('create_month', '=', current_month)],
+                        'domain': [('sale_team', '=', id), ('create_month', '=', rec.month)],
                         'context': {'create': False, 'edit': False, 'delete': False}
                     }
             else:

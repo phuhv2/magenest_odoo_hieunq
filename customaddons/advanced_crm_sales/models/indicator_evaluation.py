@@ -6,7 +6,7 @@ class IndicatorEvaluation(models.Model):
 
     sale_order_id = fields.Many2one('crm.lead', string='Sale Order')
     sale_team = fields.Many2one(related='sale_order_id.sales_team_id', string='Sale Team')
-    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
     month = fields.Selection([
         ('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'),
         ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'August'),

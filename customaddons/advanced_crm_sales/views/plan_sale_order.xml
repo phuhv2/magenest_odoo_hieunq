@@ -11,7 +11,7 @@
                                 attrs="{'invisible': [('state', 'in', ('new', 'send', 'approve','refuse'))]}"
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_send" type="object" string="Send" class="oe_highlight"
-                                attrs="{'invisible':['|',('state', 'in', ('send', 'approve','refuse')), ('check_send', '=', 'no')]}"
+                                attrs="{'invisible':[('state', 'in', ('send', 'approve','refuse')), ('check_send', '=', 'no')]}"
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_approve_confirm" type="object" string="Approve" class="oe_highlight"
                                 groups="advanced_crm_sales.group_staff_approver"
