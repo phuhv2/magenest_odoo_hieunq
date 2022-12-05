@@ -14,25 +14,26 @@ class SChoiceDepartment(models.TransientModel):
 
     # Filter data by month and department name
     def btn_confirm(self):
-        for rec in self:
-            if rec.month and rec.department_id:
-                return {
-                    'name': _("Detail Report"),
-                    'view_mode': 'tree',
-                    'res_model': 'hr.department',
-                    'type': 'ir.actions.act_window',
-                    'view_id': self.env.ref('hr.view_department_tree').id,
-                    'target': 'current',
-                    'domain': [('create_month', '=', rec.month), ('name', '=', rec.department_id.mapped('name'))],
-                    'context': {'create': False, 'edit': False, 'delete': False}
-                }
-            else:
-                return {
-                    'name': _("Detail Report"),
-                    'view_mode': 'tree',
-                    'res_model': 'hr.department',
-                    'type': 'ir.actions.act_window',
-                    'view_id': self.env.ref('hr.view_department_tree').id,
-                    'target': 'current',
-                    'context': {'create': False, 'edit': False, 'delete': False}
-                }
+        department_name = self.department_id.mapped('name')
+        if self.month and self.department_id:
+            context = {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'hr.department',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('hr.view_department_tree').id,
+                'target': 'current',
+                'domain': [('create_month', '=', self.month), ('name', 'in', department_name)],
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+        else:
+            context = {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'hr.department',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('hr.view_department_tree').id,
+                'target': 'current',
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+        return context
