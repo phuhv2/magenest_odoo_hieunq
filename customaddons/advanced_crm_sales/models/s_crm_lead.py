@@ -32,7 +32,6 @@ class SCrmLead(models.Model):
             self.check_edit = 'no'
 
     # Calculate real_revenue = amount_total corresponding to the opportunity
-    @api.depends('name')
     def _compute_real_revenue(self):
         for rec in self:
             rec.real_revenue = 0

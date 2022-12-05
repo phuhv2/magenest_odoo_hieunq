@@ -16,7 +16,6 @@ class IndicatorEvaluation(models.Model):
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
 
     # Calculate real_revenue = amount_untaxed corresponding to the opportunity
-    @api.depends('sale_order_id')
     def _compute_real_revenue(self):
         for rec in self:
             if rec.sale_order_id:
@@ -29,7 +28,7 @@ class IndicatorEvaluation(models.Model):
     @api.onchange('sale_team', 'month')
     def _onchange_monthly_sales(self):
         results = self.env['crm.team'].search([('id', '=', self.sale_team.id)])
-        if self.month:
+        if self.sale_team and self.month:
             if self.month == '1':
                 self.monthly_sales = results.january_sales
             elif self.month == '2':
