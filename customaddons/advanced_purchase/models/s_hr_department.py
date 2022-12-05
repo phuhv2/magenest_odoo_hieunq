@@ -11,10 +11,9 @@ class SHrDepartment(models.Model):
 
     @api.constrains('spending_limit')
     def _check_spending_limit(self):
-        for rec in self:
-            if rec.spending_limit:
-                if rec.spending_limit < 0:
-                    raise ValidationError("The expected price must be strictly positive")
+        if self.spending_limit:
+            if self.spending_limit < 0:
+                raise ValidationError("The expected price must be strictly positive")
 
     # Calculate real_revenue = amount_total corresponding to the department
     def _compute_real_revenue(self):
