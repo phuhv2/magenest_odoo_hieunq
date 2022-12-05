@@ -6,7 +6,7 @@ class SHrDepartment(models.Model):
     _inherit = 'hr.department'
 
     spending_limit = fields.Float('Spending Limit/Month')
-    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=True)
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
 
     @api.constrains('spending_limit')
@@ -18,7 +18,6 @@ class SHrDepartment(models.Model):
     # Calculate real_revenue = amount_total corresponding to the department
     def _compute_real_revenue(self):
         for rec in self:
-            rec.real_revenue = 0
             if rec.name:
                 amount_total = self.env['purchase.order'].search([('hr_department_id', '=', rec.id)])
                 amount_total_department = amount_total.mapped('amount_total')
