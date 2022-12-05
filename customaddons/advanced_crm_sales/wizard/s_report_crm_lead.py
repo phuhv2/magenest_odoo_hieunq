@@ -18,7 +18,7 @@ class SReportCrmLead(models.TransientModel):
         for rec in self:
             if rec.month and rec.sale_team_id:
                 if rec.month == '0':
-                    current_month = date.today().month
+                    rec.month = str(date.today().month)
                 sale_team = rec.sale_team_id.mapped('id')
                 for id in sale_team:
                     return {
@@ -28,9 +28,7 @@ class SReportCrmLead(models.TransientModel):
                         'type': 'ir.actions.act_window',
                         'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
                         'target': 'current',
-                        'domain': [('sales_team_id', '=', id),
-                                   '|', ('create_month', '=', rec.month),
-                                        ('create_month', '=', current_month)],
+                        'domain': [('sales_team_id', '=', id), ('create_month', '=', rec.month),],
                         'context': {'create': False, 'edit': False, 'delete': False}
                     }
             else:
