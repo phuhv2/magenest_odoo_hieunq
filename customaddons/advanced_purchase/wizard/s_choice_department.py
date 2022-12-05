@@ -14,6 +14,7 @@ class SChoiceDepartment(models.TransientModel):
 
     # Filter data by month and department name
     def btn_confirm(self):
+        department_name = self.department_id.mapped('name')
         if self.month and self.department_id:
             context = {
                 'name': _("Detail Report"),
@@ -22,7 +23,7 @@ class SChoiceDepartment(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('hr.view_department_tree').id,
                 'target': 'current',
-                'domain': [('create_month', '=', rec.month), ('name', '=', rec.department_id.mapped('name'))],
+                'domain': [('create_month', '=', self.month), ('name', 'in', department_name)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
         else:
