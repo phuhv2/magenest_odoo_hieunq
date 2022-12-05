@@ -15,29 +15,29 @@ class ReportIndicatorEvaluation(models.TransientModel):
 
     # Filter data by sale_team, by selected month or by current month
     def btn_confirm(self):
-        for rec in self:
-            if rec.month and rec.sale_team_id:
-                if rec.month == '0':
-                    rec.month = str(date.today().month)
-                sale_team = rec.sale_team_id.mapped('id')
-                for id in sale_team:
-                    return {
-                        'name': _("Detail Report"),
-                        'view_mode': 'tree',
-                        'res_model': 'indicator.evaluation',
-                        'type': 'ir.actions.act_window',
-                        'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
-                        'target': 'current',
-                        'domain': [('sale_team', '=', id), ('create_month', '=', rec.month)],
-                        'context': {'create': False, 'edit': False, 'delete': False}
-                    }
-            else:
-                return {
-                    'name': _("Detail Report"),
-                    'view_mode': 'tree',
-                    'res_model': 'indicator.evaluation',
-                    'type': 'ir.actions.act_window',
-                    'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
-                    'target': 'current',
-                    'context': {'create': False, 'edit': False, 'delete': False}
-                }
+        if self.month and self.sale_team_id:
+            if self.month == '0':
+                self.month = str(date.today().month)
+            sale_teams_id = self.sale_team_id.mapped('id')
+            context =  {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'indicator.evaluation',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
+                'target': 'current',
+                'domain': [('sale_team', 'in', sale_teams_id), ('create_month', '=', self.month)],
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+
+        else:
+            context = {
+                'name': _("Detail Report"),
+                'view_mode': 'tree',
+                'res_model': 'indicator.evaluation',
+                'type': 'ir.actions.act_window',
+                'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
+                'target': 'current',
+                'context': {'create': False, 'edit': False, 'delete': False}
+            }
+        return context
