@@ -6,9 +6,9 @@
             <field name="model">indicator.evaluation</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="sale_team"/>
-                    <field name="real_revenue"/>
-                    <field name="monthly_sales"/>
+                    <field name="sale_team_id"/>
+                    <field name="real_revenue" widget="monetary"/>
+                    <field name="month_revenue"/>
                 </tree>
             </field>
         </record>
@@ -20,10 +20,7 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="sale_order_id" string="Sale Order"/>
-                            <field name="sale_team"/>
-                            <field name="month"/>
-                            <field name="monthly_sales"/>
+                            <field name="sale_team_id"/>
                         </group>
                     </sheet>
                 </form>

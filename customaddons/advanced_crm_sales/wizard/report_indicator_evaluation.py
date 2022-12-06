@@ -26,7 +26,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
                 'target': 'current',
-                'domain': [('sale_team', 'in', sale_teams_id), ('create_month', '=', self.month)],
+                'domain': [('sale_team_id', 'in', sale_teams_id), ('month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
 
