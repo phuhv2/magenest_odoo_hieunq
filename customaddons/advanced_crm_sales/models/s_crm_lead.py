@@ -23,7 +23,7 @@ class SCrmLead(models.Model):
     def _compute_edit_minimum_revenue(self):
         for rec in self:
             if rec.id:
-                count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', self.id)])
+                count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', rec.id)])
                 rec.edit_minimum_revenue = False
                 if count_sale_order > 0:
                     rec.edit_minimum_revenue = True
