@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="crm.crm_lead_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('check_priority', '=', 'no')]}</attribute>
+                    <attribute name="attrs">{'invisible': [('check_priority', '=', True)]}</attribute>
                 </xpath>
 
                 <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="before">
@@ -17,11 +17,11 @@
 
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="sales_team_id"/>
-                    <field name="check_edit" invisible="1"/>
+                    <field name="edit_minimum_revenue" invisible="1" readonly="0"/>
                     <field name="minimum_revenue" widget="monetary"
-                           attrs="{'readonly':[('check_edit','=','no')]}"/>
+                           attrs="{'readonly':[('edit_minimum_revenue', '=', True)]}"/>
                     <field name="real_revenue" widget="monetary" invisible="1"/>
-                    <field name="check_priority" invisible="1"/>
+                    <field name="check_priority" invisible="1" readonly="0"/>
                 </xpath>
 
                 <!--Only assign opportunities to yourself or sales staff. Manager can sign for everyone-->

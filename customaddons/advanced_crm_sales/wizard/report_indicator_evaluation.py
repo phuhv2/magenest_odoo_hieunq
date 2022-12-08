@@ -13,12 +13,19 @@ class ReportIndicatorEvaluation(models.TransientModel):
     ], string='Month', default='0', required=True)
     sale_team_id = fields.Many2many('crm.team', string='Sale Team')
 
-    # Filter data by sale_team, by selected month or by current month
+    # Filter data by sale_team, by selected month
     def btn_confirm(self):
         if self.month and self.sale_team_id:
             if self.month == '0':
                 self.month = str(date.today().month)
             sale_teams_id = self.sale_team_id.mapped('id')
+            self.env['indicator.evaluation'].sudo().search([]).unlink()
+            for id in sale_teams_id:
+                self.env['indicator.evaluation'].sudo().create({
+                    'sale_team_id': id,
+                    'month': int(self.month)
+                })
+
             context = {
                 'name': _("Detail Report"),
                 'view_mode': 'tree',
@@ -26,7 +33,7 @@ class ReportIndicatorEvaluation(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('advanced_crm_sales.indicator_evaluation_view_tree').id,
                 'target': 'current',
-                'domain': [('sale_team_id', 'in', sale_teams_id), ('month', '=', self.month)],
+                'domain': [('sale_team_id', 'in', sale_teams_id), ('month', '=', int(self.month))],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
 

@@ -21,6 +21,9 @@
                     <sheet>
                         <group>
                             <field name="sale_team_id"/>
+                            <field name="real_revenue"/>
+                            <field name="month"/>
+                            <field name="month_revenue"/>
                         </group>
                     </sheet>
                 </form>
