@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "api_report",
+    'name': "API-Report",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,13 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'advanced_crm_sales', 'advanced_purchase'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'views/sales_purchase.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
