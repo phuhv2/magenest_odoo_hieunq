@@ -21,10 +21,11 @@ class SCrmLead(models.Model):
 
     # Check if count of sales order > 0, then minimum_revenue is readonly
     def _compute_edit_minimum_revenue(self):
-        count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', self.id)])
-        self.edit_minimum_revenue = False
-        if count_sale_order > 0:
-            self.edit_minimum_revenue = True
+        if self.id:
+            count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', self.id)])
+            self.edit_minimum_revenue = False
+            if count_sale_order > 0:
+                self.edit_minimum_revenue = True
 
     # Calculate real_revenue = amount_total corresponding to the opportunity
     def _compute_real_revenue(self):
