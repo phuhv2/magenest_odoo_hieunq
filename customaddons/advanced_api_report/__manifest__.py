@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "API-Report",
+    'name': "API Report",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -25,7 +25,9 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/sales_purchase.xml',
+        'data/s_sales_purchase_cron.xml',
+        'data/s_sales_purchase_email_template.xml',
+        'views/s_sales_purchase.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
