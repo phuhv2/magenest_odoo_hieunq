@@ -58,6 +58,7 @@ setup.py
 /backup
 /customaddons/advanced_crm_sales
 /customaddons/advanced_purchase
+/customaddons/api_report
 customaddons/odoo_14_vn_accounting_package
 customaddons/odoo_14_vn_accounting_package/
 /enterpriseaddons
