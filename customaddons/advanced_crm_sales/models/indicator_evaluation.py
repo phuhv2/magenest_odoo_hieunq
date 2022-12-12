@@ -13,10 +13,18 @@ class IndicatorEvaluation(models.Model):
     def _compute_real_revenue(self):
         for rec in self:
             if rec.sale_team_id:
-                amount_untaxed_opportunity = self.env['sale.order'].search(
-                    [('team_id', '=', rec.sale_team_id.mapped('id')), ('opportunity_id', '!=', False)])
+                amount_untaxed_opportunity = self.env['sale.order'].search([('team_id', 'in', rec.sale_team_id.mapped('id'))])
                 amount_untaxed = amount_untaxed_opportunity.mapped('amount_untaxed')
                 rec.real_revenue = sum(amount_untaxed)
+
+        # for rec in self:
+        #     sale_team_id = rec.sale_team_id.mapped('id')
+        #     for id in sale_team_id:
+        #         if rec.sale_team_id:
+        #             amount_untaxed_opportunity = self.env['sale.order'].search(
+        #                 [('team_id', '=', id), ('opportunity_id', '!=', False)])
+        #             amount_untaxed = amount_untaxed_opportunity.mapped('amount_untaxed')
+        #             rec.real_revenue = sum(amount_untaxed)
 
     # Get value month revenue to month of report
     @api.depends('month')

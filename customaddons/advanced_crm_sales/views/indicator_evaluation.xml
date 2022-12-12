@@ -23,7 +23,7 @@
                             <field name="sale_team_id"/>
                             <field name="real_revenue"/>
                             <field name="month"/>
-                            <field name="month_revenue"/>
+                            <field name="month_revenue" readonly="0"/>
                         </group>
                     </sheet>
                 </form>
