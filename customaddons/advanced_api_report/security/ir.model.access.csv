@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_advanced_api_report_advanced_api_report,advanced_api_report.advanced_api_report,model_advanced_api_report_advanced_api_report,base.group_user,1,1,1,1
+access_s_saless_purchase_employee,access_s_sales_purchase employee,model_s_sales_purchase,advanced_crm_sales.group_staff_employee,1,1,1,1
