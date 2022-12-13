@@ -3,6 +3,7 @@ from odoo import models, fields, api
 class SSalesPurchase(models.Model):
     _name = 's.sales.purchase'
 
+
     # Send mail for account
     def btn_send_email(self):
         #get users cua may ba ke toan
@@ -31,7 +32,7 @@ class SSalesPurchase(models.Model):
         hr_department = self.env['hr.department'].search([])
         department_name = hr_department.mapped('name')
         department_real_revenue = hr_department.mapped('real_revenue')
-        revenue_difference = hr_department.mapped('revenue_difference')
+        department_revenue_difference = hr_department.mapped('revenue_difference')
 
 
         template_obj = self.env['mail.template'].sudo().search([('model', 'like', 's.sales.purchase')], limit=1)
@@ -47,7 +48,7 @@ class SSalesPurchase(models.Model):
                 """% (name, revenue, diff)
 
             department_html = ""
-            for name, revenue, diff in zip(department_name, department_real_revenue, revenue_difference):
+            for name, revenue, diff in zip(department_name, department_real_revenue, department_revenue_difference):
                 department_html += """
                 <tr>
                     <td style="border: 1px solid black;">%s</td>

@@ -9,38 +9,7 @@
            <field name="subject">Session Starting Soon</field>
            <field name="auto_delete" eval="True"/>
            <field name="body_html"><![CDATA[
-<!--                <h3>I. Kinh doanh</h3>-->
-<!--                <table style="border: 1px solid black; border-collapse: collapse; width:100%">-->
-<!--                    <tr>-->
-<!--                        <th style="border: 1px solid black;">Tên nhóm bán hàng</th>-->
-<!--                        <th style="border: 1px solid black;">Doanh thu thực tế</th>-->
-<!--                        <th style="border: 1px solid black;">Chênh lệch doanh thu thực tế so với chỉ tiêu tháng hiện tại</th>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td style="border: 1px solid black;">Sales</td>-->
-<!--                        <td>231332</td>-->
-<!--                        <td>231332</td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-
-<!--                <h3>II. Mua hàng</h3>-->
-<!--                <table style="border: 1px solid black; border-collapse: collapse; width:100%">-->
-<!--                    <tr>-->
-<!--                        <th style="border: 1px solid black;">Tên phòng ban</th>-->
-<!--                        <th style="border: 1px solid black;">Chi tiêu thực tế</th>-->
-<!--                        <th style="border: 1px solid black;">Chênh lệch chi tiêu thực tế so với chỉ tiêu tháng hiện tại</th>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td style="border: 1px solid black;">Sale</td>-->
-<!--                        <td style="border: 1px solid black;">231232144</td>-->
-<!--                        <td style="border: 1px solid black;">231332</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td style="border: 1px solid black;">Sale</td>-->
-<!--                        <td style="border: 1px solid black;">231232144</td>-->
-<!--                        <td style="border: 1px solid black;">231332</td>-->
-<!--                    </tr>-->
-<!--                </table>-->
+           
                  ]]>
            </field>
        </record>
