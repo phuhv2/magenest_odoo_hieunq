@@ -16,7 +16,6 @@ class SalesPurchase(http.Controller):
             real_revenue = indicator_evaluation.mapped('real_revenue')
             revenue_difference = indicator_evaluation.mapped('revenue_difference')
 
-
             hr_department = request.env['hr.department'].sudo().search([('create_month', '=', body["month"])])
             name = hr_department.mapped('name')
             department_real_revenue = hr_department.mapped('real_revenue')
@@ -48,4 +47,3 @@ class SalesPurchase(http.Controller):
 
         json_obj = json.dumps(context, indent=4)
         return json_obj
-

@@ -22,9 +22,9 @@
                         <button name="btn_send_email" string="Send by email" type="object"/>
                     </header>
                     <sheet>
-                       <group>
-                           <field name="create_date"/>
-                       </group>
+                        <group>
+                            <field name="create_date"/>
+                        </group>
                     </sheet>
                 </form>
             </field>

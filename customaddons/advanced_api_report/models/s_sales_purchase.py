@@ -1,23 +1,25 @@
 from odoo import models, fields, api
 
+
 class SSalesPurchase(models.Model):
     _name = 's.sales.purchase'
 
-
     # Send mail for accountant
     def btn_send_email(self):
-        #get users of accountant
-        res_groups = self.env['res.groups'].sudo().search([('id', '=', 52)])
+        # get users of accountant
+        id_group_accountant = self.env.cr.execute(
+            "SELECT id FROM res_groups WHERE name::text LIKE '%Accountant%';")
+        id_group_accountant_result = self.env.cr.fetchall()
+        res_groups = self.env['res.groups'].sudo().search([('id', 'in', id_group_accountant_result)])
         res_groups_id = res_groups.mapped('users')
         res_groups_users = res_groups_id.mapped('id')
 
-        #get partner_id of accountant
+        # get partner_id of accountant
         res_users = self.env['res.users'].sudo().search([('id', 'in', res_groups_users)])
         res_users_id = res_users.mapped('partner_id')
         res_users_partner_id = res_users_id.mapped('id')
 
-
-        #get email of accountant
+        # get email of accountant
         res_partner = self.env['res.partner'].sudo().search([('id', 'in', res_users_partner_id)])
         email_accountant = res_partner.mapped('email')
 
@@ -28,12 +30,11 @@ class SSalesPurchase(models.Model):
         real_revenue = indicator_evaluation.mapped('real_revenue')
         revenue_difference = indicator_evaluation.mapped('revenue_difference')
 
-        #get data hr_department
+        # get data hr_department
         hr_department = self.env['hr.department'].search([])
         department_name = hr_department.mapped('name')
         department_real_revenue = hr_department.mapped('real_revenue')
         department_revenue_difference = hr_department.mapped('revenue_difference')
-
 
         template_obj = self.env['mail.template'].sudo().search([('model', 'like', 's.sales.purchase')], limit=1)
         if template_obj:
@@ -45,7 +46,7 @@ class SSalesPurchase(models.Model):
                     <td style="border: 1px solid black;">%s</td>
                     <td style="border: 1px solid black;">%s</td>
                 </tr>
-                """% (name, revenue, diff)
+                """ % (name, revenue, diff)
 
             department_html = ""
             for name, revenue, diff in zip(department_name, department_real_revenue, department_revenue_difference):
@@ -55,8 +56,7 @@ class SSalesPurchase(models.Model):
                     <td style="border: 1px solid black;">%s</td>
                     <td style="border: 1px solid black;">%s</td>
                 </tr>
-                """% (name, revenue, diff)
-
+                """ % (name, revenue, diff)
 
             body = """
             <h3 style="color: red;">I. Kinh doanh</h3>
@@ -77,7 +77,7 @@ class SSalesPurchase(models.Model):
                 </tr>
                 %s
             </table>
-            """% (sale_team_html, department_html)
+            """ % (sale_team_html, department_html)
 
             receipt_list = email_accountant
             mail_values = {
@@ -87,5 +87,3 @@ class SSalesPurchase(models.Model):
                 'email_from': 'laravel.ecommerce.v1@gmail.com',
             }
             self.env['mail.mail'].create(mail_values).send()
-
-

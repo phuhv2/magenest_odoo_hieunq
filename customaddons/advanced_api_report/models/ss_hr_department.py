@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class SsHrDepartment(models.Model):
     _inherit = 'hr.department'
 
