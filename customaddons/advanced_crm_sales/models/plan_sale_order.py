@@ -20,10 +20,7 @@ class PlanSaleOrder(models.Model):
         ('yes', 'Yes'),
         ('no', 'No'),
     ], string='Check Confirm')
-    check_send = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No')
-    ], string='Check Send', compute='_compute_check_send')
+    check_send = fields.Boolean('Check Send', default=False, compute='_compute_check_send')
 
     def btn_new(self):
         self.state = 'new'
@@ -62,7 +59,6 @@ class PlanSaleOrder(models.Model):
     def _compute_check_send(self):
         current_user_ui = self.env.uid
         for rec in self:
-            rec.check_send = 'no'
             if rec.create_uid:
                 if rec.create_uid == current_user_ui:
-                    rec.check_send = 'yes'
+                    rec.check_send = True
