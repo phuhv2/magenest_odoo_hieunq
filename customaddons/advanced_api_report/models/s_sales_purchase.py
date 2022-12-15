@@ -4,20 +4,20 @@ class SSalesPurchase(models.Model):
     _name = 's.sales.purchase'
 
 
-    # Send mail for account
+    # Send mail for accountant
     def btn_send_email(self):
-        #get users cua may ba ke toan
+        #get users of accountant
         res_groups = self.env['res.groups'].sudo().search([('id', '=', 52)])
         res_groups_id = res_groups.mapped('users')
         res_groups_users = res_groups_id.mapped('id')
 
-        #get partner_id cua may ba ke toan
+        #get partner_id of accountant
         res_users = self.env['res.users'].sudo().search([('id', 'in', res_groups_users)])
         res_users_id = res_users.mapped('partner_id')
         res_users_partner_id = res_users_id.mapped('id')
 
 
-        #get email cua may ba ke toan
+        #get email of accountant
         res_partner = self.env['res.partner'].sudo().search([('id', 'in', res_users_partner_id)])
         email_accountant = res_partner.mapped('email')
 
