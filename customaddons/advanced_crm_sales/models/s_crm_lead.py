@@ -55,3 +55,21 @@ class SCrmLead(models.Model):
     # Override the Lost button again for the groups leader
     def btn_leader_set_lost(self):
         return super(SCrmLead, self).action_set_lost()
+
+    # Only assign opportunities to yourself or sales staff. Manager can sign for everyone
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        current_uid = self.env.uid
+
+        employee_list_id = []
+        employee_ids = self.env.ref('advanced_crm_sales.group_staff_employee').users.ids
+        approver_ids = self.env.ref('advanced_crm_sales.group_staff_approver').users.ids
+        manager_ids = self.env.ref('advanced_crm_sales.group_staff_manager').users.ids
+        leader_ids = self.env.ref('advanced_crm_sales.group_staff_leader').users.ids
+
+        for id in employee_ids:
+            if id not in manager_ids and id not in leader_ids and id not in approver_ids:
+                employee_list_id.append(id)
+
+        if current_uid in employee_list_id:
+            return {'domain': {'user_id': [('id', 'in', employee_list_id)]}}

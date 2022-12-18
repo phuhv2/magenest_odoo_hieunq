@@ -24,7 +24,6 @@
                     <field name="check_priority" invisible="1" readonly="0"/>
                 </xpath>
 
-                <!--Only assign opportunities to yourself or sales staff. Manager can sign for everyone-->
                 <xpath expr="//field[@name='user_id']" position="attributes">
                     <attribute name="groups">advanced_crm_sales.group_staff_employee</attribute>
                 </xpath>
