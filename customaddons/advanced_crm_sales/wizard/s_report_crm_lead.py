@@ -26,7 +26,7 @@ class SReportCrmLead(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'view_id': self.env.ref('crm.crm_case_tree_view_oppor').id,
                 'target': 'current',
-                'domain': [('sales_team_id', 'in', sale_teams_id), ('create_month', '=', self.month), ],
+                'domain': [('sales_team_id', 'in', sale_teams_id), ('create_month', '=', self.month)],
                 'context': {'create': False, 'edit': False, 'delete': False}
             }
 

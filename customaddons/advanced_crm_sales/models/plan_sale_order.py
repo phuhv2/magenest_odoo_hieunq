@@ -20,7 +20,7 @@ class PlanSaleOrder(models.Model):
         ('yes', 'Yes'),
         ('no', 'No'),
     ], string='Check Confirm')
-    check_send = fields.Boolean('Check Send', compute='_compute_check_send')
+    is_send = fields.Boolean('Check Send', compute='_compute_is_send')
 
     def btn_new(self):
         self.state = 'new'
@@ -55,11 +55,11 @@ class PlanSaleOrder(models.Model):
             raise UserError('All approvers who have not yet declined approval.')
 
     # Only the creator can use the send button
-    def _compute_check_send(self):
+    def _compute_is_send(self):
         current_uid = self.env.uid
         create_uid = self.create_uid
         create_uid_result = create_uid.mapped('id')
 
-        self.check_send = False
+        self.is_send = False
         if current_uid != create_uid_result[0]:
-            self.check_send = True
+            self.is_send = True

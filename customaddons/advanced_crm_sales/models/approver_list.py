@@ -9,8 +9,8 @@ class AprroverList(models.Model):
         ('not approved yet', 'Not Approved Yet'),
         ('approve', 'Approve'),
         ('refuse', 'Refuse'),
-    ], string='not approved yet')
-    plan_sale_order_id = fields.Many2one('plan.sale.order', string='Plan Sale Order')
+    ], string='not approved yet', readonly=True)
+    plan_sale_order_id = fields.Many2one('plan.sale.order', string='Plan Sale Order', readonly=True)
 
     def btn_approve(self):
         self.approval_status = 'approve'

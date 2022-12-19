@@ -12,7 +12,7 @@
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_send" type="object" string="Send" class="oe_highlight"
                                 attrs="{'invisible':['|', ('state', 'in', ('send', 'approve','refuse')),
-                                        ('check_send', '=', True)]}"
+                                        ('is_send', '=', True)]}"
                                 groups="advanced_crm_sales.group_staff_employee"/>
                         <button name="btn_approve_confirm" type="object" string="Approve" class="oe_highlight"
                                 groups="advanced_crm_sales.group_staff_approver"
@@ -36,7 +36,7 @@
                             <field name="quotation"
                                    attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
                             <field name="content" attrs="{'readonly': [('state', 'in', ('send','approve','refuse'))]}"/>
-                            <field name="check_send" invisible="1" readonly="0"/>
+                            <field name="is_send" invisible="1" readonly="0"/>
                         </group>
                         <notebook>
                             <page string="Approver List" name="approver_list_notes">
