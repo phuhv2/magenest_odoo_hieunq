@@ -8,8 +8,6 @@ class SCrmLead(models.Model):
     sales_team_id = fields.Many2one('crm.team', string='Sales Team')
     minimum_revenue = fields.Float('Minimum Revenue (VAT)')
     quotation_count = fields.Integer(compute='_compute_quotation_count', string="Quotations", store=False)
-    is_minimum_revenue = fields.Boolean('Edit Minimum Revenue', default=False,
-                                        compute='_compute_is_minimum_revenue', store=True)
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
     is_priority = fields.Boolean('Is Priority', default=False, compute='_compute_is_priority', store=True)
@@ -27,12 +25,6 @@ class SCrmLead(models.Model):
             if rec.id:
                 quotation_count = self.env['sale.order'].search_count([('opportunity_id', '=', rec.id)])
                 rec.quotation_count = quotation_count
-
-    @api.depends('quotation_count')
-    def _compute_is_minimum_revenue(self):
-        for rec in self:
-            if rec.quotation_count > 0:
-                rec.is_minimum_revenue = True
 
     # Calculate real_revenue = amount_total corresponding to the opportunity
     def _compute_real_revenue(self):
