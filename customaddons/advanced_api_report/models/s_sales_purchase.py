@@ -6,40 +6,35 @@ class SSalesPurchase(models.Model):
 
     # Send mail for accountant
     def btn_send_email(self):
-        # get users of accountant
-        id_group_accountant = self.env.cr.execute(
-            "SELECT id FROM res_groups WHERE name::text LIKE '%Accountant%';")
-        id_group_accountant_result = self.env.cr.fetchall()
-        res_groups = self.env['res.groups'].sudo().search([('id', 'in', id_group_accountant_result)])
-        res_groups_id = res_groups.mapped('users')
-        res_groups_users = res_groups_id.mapped('id')
+        # get list id of accountant
+        accountant_ids = self.env.ref('advanced_purchase.group_staff_accountant').users.ids
 
-        # get partner_id of accountant
-        res_users = self.env['res.users'].sudo().search([('id', 'in', res_groups_users)])
+        # get list partner_id of accountant
+        res_users = self.env['res.users'].sudo().search([('id', 'in', accountant_ids)])
         res_users_id = res_users.mapped('partner_id')
         res_users_partner_id = res_users_id.mapped('id')
 
-        # get email of accountant
+        # get list email of accountant
         res_partner = self.env['res.partner'].sudo().search([('id', 'in', res_users_partner_id)])
         email_accountant = res_partner.mapped('email')
 
-        # get data sales (indicator evaluation)
+        # get data indicator evaluation (crm_sales)
         indicator_evaluation = self.env['indicator.evaluation'].search([])
         sale_team = indicator_evaluation.mapped('sale_team_id')
-        sale_teams = sale_team.mapped('name')
+        sale_team_name = sale_team.mapped('name')
         real_revenue = indicator_evaluation.mapped('real_revenue')
-        revenue_difference = indicator_evaluation.mapped('revenue_difference')
+        real_revenue_difference = indicator_evaluation.mapped('real_revenue_difference')
 
-        # get data hr_department
+        # get data hr_department (purchase)
         hr_department = self.env['hr.department'].search([])
         department_name = hr_department.mapped('name')
-        department_real_revenue = hr_department.mapped('real_revenue')
-        department_revenue_difference = hr_department.mapped('revenue_difference')
+        real_cost = hr_department.mapped('real_cost')
+        real_cost_difference = hr_department.mapped('real_cost_difference')
 
         template_obj = self.env['mail.template'].sudo().search([('model', 'like', 's.sales.purchase')], limit=1)
         if template_obj:
             sale_team_html = ""
-            for name, revenue, diff in zip(sale_teams, real_revenue, revenue_difference):
+            for name, revenue, diff in zip(sale_team_name, real_revenue, real_revenue_difference):
                 sale_team_html += """
                 <tr>
                     <td style="border: 1px solid black;">%s</td>
@@ -49,7 +44,7 @@ class SSalesPurchase(models.Model):
                 """ % (name, revenue, diff)
 
             department_html = ""
-            for name, revenue, diff in zip(department_name, department_real_revenue, department_revenue_difference):
+            for name, revenue, diff in zip(department_name, real_cost, real_cost_difference):
                 department_html += """
                 <tr>
                     <td style="border: 1px solid black;">%s</td>

@@ -6,8 +6,8 @@
             <field name="model">hr.department</field>
             <field name="inherit_id" ref="hr.view_department_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='real_revenue']" position="after">
-                    <field name="revenue_difference" widget="monetary"/>
+                <xpath expr="//field[@name='real_cost']" position="after">
+                    <field name="real_cost_difference" widget="monetary" invisible="1"/>
                 </xpath>
             </field>
         </record>

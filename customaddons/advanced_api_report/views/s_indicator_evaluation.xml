@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="advanced_crm_sales.indicator_evaluation_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='real_revenue']" position="after">
-                    <field name="revenue_difference" readonly="0"/>
+                    <field name="real_revenue_difference" readonly="0"/>
                 </xpath>
             </field>
         </record>
