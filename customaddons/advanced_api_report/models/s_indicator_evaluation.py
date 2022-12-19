@@ -5,9 +5,10 @@ from datetime import date
 class SIndicatorEvaluation(models.Model):
     _inherit = 'indicator.evaluation'
 
-    revenue_difference = fields.Float('Revenue Difference', compute='_compute_revenue_difference', store=True)
+    real_revenue_difference = fields.Float('Real Revenue Difference', compute='_compute_real_revenue_difference',
+                                           store=True)
 
-    def _compute_revenue_difference(self):
+    def _compute_real_revenue_difference(self):
         current_month = date.today().month
 
         for rec in self:
@@ -19,4 +20,4 @@ class SIndicatorEvaluation(models.Model):
                                                                      res.september_sales, res.october_sales,
                                                                      res.november_sales, res.december_sales))
 
-                rec.revenue_difference = rec.real_revenue - month_sales[0][current_month - 1]
+                rec.real_revenue_difference = rec.real_revenue - month_sales[0][current_month - 1]

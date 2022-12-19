@@ -7,11 +7,11 @@ class SCrmLead(models.Model):
 
     sales_team_id = fields.Many2one('crm.team', string='Sales Team')
     minimum_revenue = fields.Float('Minimum Revenue (VAT)')
-    edit_minimum_revenue = fields.Boolean('Edit Minimum Revenue', default=False,
-                                          compute='_compute_edit_minimum_revenue', store=True)
+    is_minimum_revenue = fields.Boolean('Edit Minimum Revenue', default=False,
+                                        compute='_compute_is_minimum_revenue', store=True)
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
     create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
-    check_priority = fields.Boolean('Check Priority', default=False, compute='_compute_check_priority', store=True)
+    is_priority = fields.Boolean('Is Priority', default=False, compute='_compute_is_priority', store=True)
 
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
@@ -20,13 +20,13 @@ class SCrmLead(models.Model):
                 raise ValidationError("The expected price must be strictly positive")
 
     # Check if count of sales order > 0, then minimum_revenue is readonly
-    def _compute_edit_minimum_revenue(self):
+    def _compute_is_minimum_revenue(self):
         for rec in self:
             if rec.id:
                 count_sale_order = self.env['sale.order'].search_count([('opportunity_id', '=', rec.id)])
-                rec.edit_minimum_revenue = False
+                rec.is_minimum_revenue = False
                 if count_sale_order > 0:
-                    rec.edit_minimum_revenue = True
+                    rec.is_minimum_revenue = True
 
     # Calculate real_revenue = amount_total corresponding to the opportunity
     def _compute_real_revenue(self):
@@ -46,12 +46,30 @@ class SCrmLead(models.Model):
 
     # Check priority = 3 then hide the Lost button
     @api.depends('priority')
-    def _compute_check_priority(self):
+    def _compute_is_priority(self):
         for rec in self:
-            rec.check_priority = False
+            rec.is_priority = False
             if rec.priority == '3':
-                rec.check_priority = True
+                rec.is_priority = True
 
     # Override the Lost button again for the groups leader
     def btn_leader_set_lost(self):
         return super(SCrmLead, self).action_set_lost()
+
+    # Only assign opportunities to yourself or sales staff. Manager can sign for everyone
+    @api.onchange('user_id')
+    def _onchange_user_id(self):
+        current_uid = self.env.uid
+
+        employee_list_id = []
+        employee_ids = self.env.ref('advanced_crm_sales.group_staff_employee').users.ids
+        approver_ids = self.env.ref('advanced_crm_sales.group_staff_approver').users.ids
+        manager_ids = self.env.ref('advanced_crm_sales.group_staff_manager').users.ids
+        leader_ids = self.env.ref('advanced_crm_sales.group_staff_leader').users.ids
+
+        for id in employee_ids:
+            if id not in manager_ids and id not in leader_ids and id not in approver_ids:
+                employee_list_id.append(id)
+
+        if current_uid in employee_list_id:
+            return {'domain': {'user_id': [('id', 'in', employee_list_id)]}}

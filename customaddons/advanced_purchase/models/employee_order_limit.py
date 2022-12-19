@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 class EmployeeOrderLimit(models.Model):
     _name = 'employee.order.limit'
 
-    name = fields.Many2one('res.users', string='Employee Name')
+    employee_id = fields.Many2one('res.users', string='Employee Name')
     order_limit = fields.Float(string='Order Limit', digit=(12, 3))
 
     @api.constrains('order_limit')
