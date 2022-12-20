@@ -5,18 +5,18 @@ from odoo.exceptions import ValidationError
 class SCrmTeam(models.Model):
     _inherit = 'crm.team'
 
-    january_sales = fields.Float("January Sales")
-    february_sales = fields.Float("February Sales")
-    march_sales = fields.Float("March Sales")
-    april_sales = fields.Float("April Sales")
-    may_sales = fields.Float("May Sales")
-    june_sales = fields.Float("June Sales")
-    july_sales = fields.Float("July Sales")
-    august_sales = fields.Float("August Sales")
-    september_sales = fields.Float("September Sales")
-    october_sales = fields.Float("October Sales")
-    november_sales = fields.Float("November Sales")
-    december_sales = fields.Float("December Sales")
+    january_sales = fields.Float(string="January Sales")
+    february_sales = fields.Float(string="February Sales")
+    march_sales = fields.Float(string="March Sales")
+    april_sales = fields.Float(string="April Sales")
+    may_sales = fields.Float(string="May Sales")
+    june_sales = fields.Float(string="June Sales")
+    july_sales = fields.Float(string="July Sales")
+    august_sales = fields.Float(string="August Sales")
+    september_sales = fields.Float(string="September Sales")
+    october_sales = fields.Float(string="October Sales")
+    november_sales = fields.Float(string="November Sales")
+    december_sales = fields.Float(string="December Sales")
 
     @api.constrains('january_sales', 'february_sales', 'march_sales', 'april_sales', 'may_sales', 'june_sales',
                     'july_sales', 'august_sales', 'september_sales', 'october_sales', 'november_sales',

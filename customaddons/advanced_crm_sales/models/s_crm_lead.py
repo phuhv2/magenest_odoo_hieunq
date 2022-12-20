@@ -6,11 +6,11 @@ class SCrmLead(models.Model):
     _inherit = 'crm.lead'
 
     sales_team_id = fields.Many2one('crm.team', string='Sales Team')
-    minimum_revenue = fields.Float('Minimum Revenue (VAT)')
+    minimum_revenue = fields.Float(string='Minimum Revenue (VAT)')
     quotation_count = fields.Integer(compute='_compute_quotation_count', string="Quotations", store=False)
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
-    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
-    is_priority = fields.Boolean('Is Priority', default=False, compute='_compute_is_priority', store=True)
+    create_month = fields.Integer(string='Create Month', compute='_compute_create_month', store=True)
+    is_priority = fields.Boolean(default=False, compute='_compute_is_priority', store=True)
 
     @api.constrains('minimum_revenue')
     def _check_minimum_revenue(self):
@@ -38,9 +38,7 @@ class SCrmLead(models.Model):
     def _compute_create_month(self):
         for rec in self:
             if rec.create_date:
-                create_date = str(rec.create_date)
-                create_month = create_date.split("-")
-                rec.create_month = create_month[1]
+                rec.create_month = rec.create_date.month
 
     # Check priority = 3 then hide the Lost button
     @api.depends('priority')

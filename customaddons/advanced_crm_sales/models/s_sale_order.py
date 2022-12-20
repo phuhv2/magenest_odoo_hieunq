@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class SSaleOrder(models.Model):
@@ -8,7 +8,7 @@ class SSaleOrder(models.Model):
 
     # Override check added plan and plan approved
     def action_confirm(self):
-        if self.plan_sale_order_id and self.plan_sale_order_id.check_confirm == 'yes':
+        if self.plan_sale_order_id and self.plan_sale_order_id.is_confirm == True:
             return super(SSaleOrder, self).action_confirm()
         else:
             raise models.ValidationError('The business plan has not been added or approved yet')

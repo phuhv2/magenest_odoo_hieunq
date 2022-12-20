@@ -16,10 +16,10 @@ class AprroverList(models.Model):
         self.approval_status = 'approve'
         states = self.plan_sale_order_id.approver_id.mapped('approval_status')
         if [state == 'approve' for state in states]:
-            self.plan_sale_order_id.check_confirm = 'yes'
+            self.plan_sale_order_id.is_confirm = True
 
     def btn_refuse(self):
         self.approval_status = 'refuse'
         states = self.plan_sale_order_id.approver_id.mapped('approval_status')
         if [state == 'refuse' for state in states]:
-            self.plan_sale_order_id.check_confirm = 'no'
+            self.plan_sale_order_id.is_confirm = False

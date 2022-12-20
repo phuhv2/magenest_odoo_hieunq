@@ -6,7 +6,7 @@ class PlanSaleOrder(models.Model):
     _name = 'plan.sale.order'
     _inherit = ['mail.thread']
 
-    name = fields.Text('Plan Sale Order Name', required=True)
+    name = fields.Text(string='Plan Sale Order Name', required=True)
     quotation = fields.Many2one('sale.order', string='Quotation', readonly=True)
     content = fields.Text(string='Content', required=True)
     state = fields.Selection([
@@ -16,11 +16,8 @@ class PlanSaleOrder(models.Model):
         ('refuse', 'Refuse'),
     ], string='State')
     approver_id = fields.One2many('approver.list', 'plan_sale_order_id', string='Approver')
-    check_confirm = fields.Selection([
-        ('yes', 'Yes'),
-        ('no', 'No'),
-    ], string='Check Confirm')
-    is_send = fields.Boolean('Check Send', compute='_compute_is_send')
+    is_confirm = fields.Boolean()
+    is_send = fields.Boolean(compute='_compute_is_send')
 
     def btn_new(self):
         self.state = 'new'
@@ -38,7 +35,7 @@ class PlanSaleOrder(models.Model):
             raise UserError('Cannot confirm this approve')
 
     def btn_approve_confirm(self):
-        if self.check_confirm == 'yes':
+        if self.is_confirm == True:
             if self.approver_id.approver:
                 self.state = 'approve'
                 self.message_post(body=f'{self.create_uid.name} -> The new plan has been approved.')
@@ -48,7 +45,7 @@ class PlanSaleOrder(models.Model):
             raise UserError('All approvers have not yet agreed to approve.')
 
     def btn_refuse_confirm(self):
-        if self.check_confirm == 'no':
+        if self.is_confirm == False:
             self.state = 'refuse'
             self.message_post(body=f'{self.create_uid.name}-> The new plan has been refused.')
         else:

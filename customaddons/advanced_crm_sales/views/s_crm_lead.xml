@@ -17,7 +17,7 @@
 
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="sales_team_id"/>
-                    <field name="quotation_count" invisible="1" readonly="0"/>
+                    <field name="quotation_count" invisible="1" readonly="0" string="Quotations"/>
                     <field name="minimum_revenue" widget="monetary"
                            attrs="{'readonly':[('quotation_count', '!=', 0)]}"/>
                     <field name="real_revenue" widget="monetary" invisible="1"/>
