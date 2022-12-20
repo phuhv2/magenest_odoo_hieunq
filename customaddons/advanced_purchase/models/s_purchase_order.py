@@ -7,7 +7,7 @@ class SPurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     hr_department_id = fields.Many2one('hr.department', string='Department', required=True)
-    is_send = fields.Boolean('Is Send', store=True)
+    is_send = fields.Boolean(store=True)
 
     # Override check the creator has exceeded the limit
     def button_confirm(self):

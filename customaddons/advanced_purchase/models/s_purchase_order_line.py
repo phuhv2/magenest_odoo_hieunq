@@ -6,7 +6,7 @@ class SPurchaseOrderLine(models.Model):
 
     product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)],
                                  change_default=True, index='btree_not_null')
-    supplier = fields.Char('Supplier', compute='_compute_supplier', store=True)
+    supplier = fields.Char(string='Supplier', compute='_compute_supplier', store=True)
 
     # Check supplier for cheapest price
     # Check supplier for shortest delivery time
@@ -19,11 +19,11 @@ class SPurchaseOrderLine(models.Model):
                     order='price asc')
                 supplier_price = supplier_line_price.mapped('partner_id.name')
 
+                supplier = supplier_price[0]
                 if len(supplier_price) > 1:
                     supplier_line_delay = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id', '=', rec.product_id.id)],
                         order='delay asc', limit=1)
                     supplier_delay = supplier_line_delay.mapped('partner_id.name')
-                    rec.supplier = ''.join(supplier_delay)
-                else:
-                    rec.supplier = ''.join(supplier_price)
+                    supplier = supplier_delay[0]
+                rec.supplier = supplier

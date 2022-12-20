@@ -5,9 +5,9 @@ from odoo.exceptions import ValidationError
 class SHrDepartment(models.Model):
     _inherit = 'hr.department'
 
-    spending_limit = fields.Float('Spending Limit/Month')
+    spending_limit = fields.Float(string='Spending Limit/Month')
     real_cost = fields.Float(string='Real Cost', compute='_compute_real_cost', store=False)
-    create_month = fields.Integer('Create Month', compute='_compute_create_month', store=True)
+    create_month = fields.Integer(string='Create Month', compute='_compute_create_month', store=True)
 
     @api.constrains('spending_limit')
     def _check_spending_limit(self):
@@ -27,6 +27,4 @@ class SHrDepartment(models.Model):
     def _compute_create_month(self):
         for rec in self:
             if rec.create_date:
-                create_date = str(rec.create_date)
-                create_month = create_date.split("-")
-                rec.create_month = create_month[1]
+                rec.create_month = rec.create_date.month
