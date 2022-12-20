@@ -6,8 +6,8 @@ class IndicatorEvaluation(models.Model):
 
     sale_team_id = fields.Many2one('crm.team', string='Sale Team')
     real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
-    month = fields.Integer('Month', store=True)
-    month_revenue = fields.Float('Month Revenue', compute='_compute_month_revenue', store=True)
+    month = fields.Integer(string='Month', store=True)
+    month_revenue = fields.Float(string='Month Revenue', compute='_compute_month_revenue', store=True)
 
     # Calculate real_revenue = amount_untaxed corresponding to the opportunity
     def _compute_real_revenue(self):
