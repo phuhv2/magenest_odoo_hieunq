@@ -4,8 +4,6 @@ from odoo import models, fields, api
 class SPurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)],
-                                 change_default=True, index='btree_not_null')
     supplier = fields.Char(string='Supplier', compute='_compute_supplier', store=True)
 
     # Check supplier for cheapest price

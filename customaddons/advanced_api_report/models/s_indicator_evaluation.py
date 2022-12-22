@@ -5,8 +5,7 @@ from datetime import date
 class SIndicatorEvaluation(models.Model):
     _inherit = 'indicator.evaluation'
 
-    real_revenue_difference = fields.Float('Real Revenue Difference', compute='_compute_real_revenue_difference',
-                                           store=False)
+    real_revenue_difference = fields.Float('Real Revenue Difference', compute='_compute_real_revenue_difference')
 
     def _compute_real_revenue_difference(self):
         current_month = date.today().month

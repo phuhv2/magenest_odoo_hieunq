@@ -7,8 +7,8 @@ class SCrmLead(models.Model):
 
     sales_team_id = fields.Many2one('crm.team', string='Sales Team')
     minimum_revenue = fields.Float(string='Minimum Revenue (VAT)')
-    quotation_count = fields.Integer(compute='_compute_quotation_count', string="Quotations", store=False)
-    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
+    quotation_count = fields.Integer(compute='_compute_quotation_count', string="Quotations")
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue')
     create_month = fields.Integer(string='Create Month', compute='_compute_create_month', store=True)
     is_priority = fields.Boolean(default=False, compute='_compute_is_priority', store=True)
 

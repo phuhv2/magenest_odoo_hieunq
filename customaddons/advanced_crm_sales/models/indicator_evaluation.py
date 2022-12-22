@@ -5,7 +5,7 @@ class IndicatorEvaluation(models.Model):
     _name = 'indicator.evaluation'
 
     sale_team_id = fields.Many2one('crm.team', string='Sale Team')
-    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue', store=False)
+    real_revenue = fields.Float(string='Real Revenue', compute='_compute_real_revenue')
     month = fields.Integer(string='Month', store=True)
     month_revenue = fields.Float(string='Month Revenue', compute='_compute_month_revenue', store=True)
 

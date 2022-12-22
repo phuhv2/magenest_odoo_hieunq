@@ -6,7 +6,7 @@ class SHrDepartment(models.Model):
     _inherit = 'hr.department'
 
     spending_limit = fields.Float(string='Spending Limit/Month')
-    real_cost = fields.Float(string='Real Cost', compute='_compute_real_cost', store=False)
+    real_cost = fields.Float(string='Real Cost', compute='_compute_real_cost')
     create_month = fields.Integer(string='Create Month', compute='_compute_create_month', store=True)
 
     @api.constrains('spending_limit')
