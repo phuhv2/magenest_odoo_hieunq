@@ -4,7 +4,7 @@ from odoo import models, fields, api
 class SsHrDepartment(models.Model):
     _inherit = 'hr.department'
 
-    real_cost_difference = fields.Float('Real Cost Difference', compute='_compute_real_cost_difference')
+    real_cost_difference = fields.Float(string='Real Cost Difference', compute='_compute_real_cost_difference')
 
     def _compute_real_cost_difference(self):
         for rec in self:
