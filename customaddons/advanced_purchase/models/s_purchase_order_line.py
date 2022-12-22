@@ -17,11 +17,11 @@ class SPurchaseOrderLine(models.Model):
                     order='price asc')
                 supplier_price = supplier_line_price.mapped('partner_id.name')
 
-                supplier = supplier_price[0]
+                supplier = ','.join(supplier_price)
                 if len(supplier_price) > 1:
                     supplier_line_delay = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id', '=', rec.product_id.id)],
                         order='delay asc', limit=1)
                     supplier_delay = supplier_line_delay.mapped('partner_id.name')
-                    supplier = supplier_delay[0]
+                    supplier = ','.join(supplier_delay)
                 rec.supplier = supplier

@@ -1,5 +1,5 @@
 <odoo>
-    <data noupdate="0">
+    <data>
         <!--Email template -->
         <record id="email_template" model="mail.template">
             <field name="name">Email Template</field>

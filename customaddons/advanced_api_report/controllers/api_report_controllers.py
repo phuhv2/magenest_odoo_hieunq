@@ -11,8 +11,7 @@ class SalesPurchase(http.Controller):
 
         if body["token"] == access_token and body["month"]:
             indicator_evaluation = request.env['indicator.evaluation'].sudo().search([('month', '=', body["month"])])
-            sale_team = indicator_evaluation.mapped('sale_team_id')
-            sale_team_name = sale_team.mapped('name')
+            sale_team_name = indicator_evaluation.mapped('sale_team_id.name')
             real_revenue = indicator_evaluation.mapped('real_revenue')
             real_revenue_difference = indicator_evaluation.mapped('real_revenue_difference')
 
